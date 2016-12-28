@@ -31,12 +31,17 @@ class ReleaseFetcher
       releases_slugs = releases_data.keys
       new_release_slug = releases_slugs - Release.where(slug: releases_slugs).pluck(:slug)
       new_release_slug.each do |slug|
-        Release.create(releases_data[slug])
+        release = Release.create(releases_data[slug])
+        logger.warning("Unable to create release: #{release.to_json}") unless release
       end
     end
   end
 
   private
+
+  def logger
+    @logger ||= Rails.logger
+  end
 
   def total_page(document)
     document.css(".digg_pagination a:not([rel='next'])").last.try(:content).to_i
@@ -63,11 +68,13 @@ class ReleaseFetcher
           series_title = series_element.content
           series_slug = Series.slug_from_url(series_url)
           series = Series.where(slug: series_slug).first_or_create(title: series_title)
+          logger.warning("Unable to create series: #{series.to_json}") unless series
 
           group_url = group_element['href']
           group_title = group_element.content
           group_slug = Group.slug_from_url(group_url)
           group = Group.where(slug: group_slug).first_or_create(title: group_title)
+          logger.warning("Unable to create group: #{group.to_json}") unless group
 
           release_url = release_element['href']
           release_title = release_element.content
@@ -91,7 +98,7 @@ class ReleaseFetcher
   def in_time?(document, time)
     return true unless time
 
-    if document_date = document.css('.l-content.release > b').last.try(:content)
+    if document_date = document.css('.l-content.release > b').first.try(:content)
       Time.zone.parse(document_date).beginning_of_day >= time.beginning_of_day
     end
   end

@@ -29,12 +29,17 @@ class SeriesFetcher
 
       new_slugs = series_data.keys - existed_series.pluck(:slug)
       new_slugs.each do |slug|
-        Series.create(series_data[slug])
+        new_series = Series.create(series_data[slug])
+        logger.warning("Unable to create series: #{new_series.to_json}") unless new_series
       end
     end
   end
 
   private
+
+  def logger
+    @logger = Rails.logger
+  end
 
   def get_page(page)
     rep = HTTParty.get("#{@url}#{page}")

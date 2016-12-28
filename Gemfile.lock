@@ -43,6 +43,7 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (9.0.6)
+    chronic (0.10.2)
     concurrent-ruby (1.0.3)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -178,6 +179,8 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -205,6 +208,7 @@ DEPENDENCIES
   vcr
   web-console (~> 2.0)
   webmock
+  whenever
 
 BUNDLED WITH
    1.13.7

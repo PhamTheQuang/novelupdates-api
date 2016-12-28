@@ -25,7 +25,7 @@ RSpec.describe ReleaseFetcher do
 
       it 'get releases around that time' do
         VCR.use_cassette("releases") do
-          expect(result.count).to eq 640
+          expect(result.count).to eq 720
         end
 
           expect(result['399281'].slice(:slug, :title, :url, :series, :group)).to eq(

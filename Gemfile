@@ -14,6 +14,7 @@ gem 'pg'
 gem 'httparty'
 gem 'nokogiri'
 gem 'figaro'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'byebug'
