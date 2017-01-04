@@ -14,6 +14,10 @@ gem 'httparty'
 gem 'nokogiri'
 gem 'figaro'
 gem 'whenever', require: false
+gem 'devise'
+gem 'rails_admin'
+gem 'kaminari'
+gem 'haml-rails'
 
 group :development, :test do
   gem 'byebug'
@@ -33,5 +37,9 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'vcr'
   gem 'webmock'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
